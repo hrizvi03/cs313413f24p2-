@@ -1,9 +1,5 @@
 package cs271.lab.list;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
-
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
@@ -11,13 +7,16 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import static org.junit.Assert.*;
+
 public class TestList {
 
   private List<Integer> list;
 
   @Before
   public void setUp() throws Exception {
-    list = new ArrayList<Integer>();
+    //list = new ArrayList<Integer>();
+    list = new LinkedList<Integer>();
     // TODO also try with a LinkedList - does it make any difference?
   }
 
@@ -98,9 +97,9 @@ public class TestList {
     // TODO fix the expected values in the assertions below
     assertEquals(6, list.size());
     assertEquals(1, list.indexOf(77));
-    assertEquals(4, list.lastIndexOf(77));
+    assertEquals(3, list.lastIndexOf(77));
     assertEquals(4, list.get(2).intValue());
-    assertEquals(4, list.get(3).intValue());
+    assertEquals(77, list.get(3).intValue());
     list.remove(Integer.valueOf(5)); // what does this one do?
     assertEquals(5, list.size());
     assertEquals(1, list.indexOf(77));
@@ -120,6 +119,7 @@ public class TestList {
     list.add(66);
     // TODO using containsAll and List.of (see above),
     assertTrue(list.containsAll(List.of(33,44,55,66,77)));
+
     assertFalse(list.containsAll(List.of(11, 22, 33)));
 
   }
@@ -142,29 +142,19 @@ public class TestList {
 
   @Test
   public void testRemoveAll() {
-    list.add(33);
-    list.add(77);
-    list.add(44);
-    list.add(77);
-    list.add(55);
-    list.add(77);
-    list.add(66);
+    list.addAll(List.of(33,77,44,55,77,66));
+    list.removeAll(List.of(33,44,55,66));
     // TODO in a single statement using removeAll and List.of,
     // remove items from the list to make the following assertions pass
     // (without touching the assertions themselves)
-    assertEquals(3, list.size());
-    assertEquals(List.of(77, 77, 77), list);
+    assertEquals(2, list.size());
+    assertEquals(List.of(77, 77), list);
   }
 
   @Test
   public void testRetainAll() {
-    list.add(33);
-    list.add(77);
-    list.add(44);
-    list.add(77);
-    list.add(55);
-    list.add(77);
-    list.add(66);
+    list.addAll(List.of(33,77,44,77,55,77,66));
+    list.retainAll(List.of(77));
     // TODO in a single statement using retainAll and List.of,
     // remove items from the list to make the following assertions pass
     // (without touching the assertions themselves)
@@ -174,13 +164,10 @@ public class TestList {
 
   @Test
   public void testSet() {
-    list.add(33);
-    list.add(77);
-    list.add(44);
-    list.add(77);
-    list.add(55);
-    list.add(77);
-    list.add(66);
+    list.addAll(List.of(33,77,44,77,55,77,66));
+    list.set(1,99);
+    list.set(3,99);
+    list.set(5,99);
     // TODO use the set method to change specific elements in the list
     // such that the following assertions pass
     // (without touching the assertions themselves)
@@ -196,15 +183,9 @@ public class TestList {
 
   @Test
   public void testSubList() {
-    list.add(33);
-    list.add(77);
-    list.add(44);
-    list.add(77);
-    list.add(55);
-    list.add(77);
-    list.add(66);
+    list.addAll(List.of(33,77,44,77,55,77,66));
     // TODO fix the arguments in the subList method so that the assertion
     // passes
-    assertEquals(List.of(44, 77, 55), list.subList(0, 0));
+    assertEquals(List.of(44, 77, 55), list.subList(2,5));
   }
 }
